@@ -82,7 +82,16 @@ class Game:
 
     def play_again(self, screen):
             time.sleep(1)
-            play_again = self.drawing.end_screen(screen)
+            # Check game result
+            res = self.AI.evaluateBoard(self.board)
+            if (res == 10):
+                str = "I WIN!"
+            elif (res == -10):
+                str = "YOU WIN!"
+            else:
+                str = "IT'S A DRAW!"
+
+            play_again = self.drawing.end_screen(screen, str)
                     
             if play_again:
                 self.board = [[0 for j in range(NB_COLUMN_ROW)] for i in range(NB_COLUMN_ROW)]
