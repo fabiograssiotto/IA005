@@ -110,5 +110,3 @@ class AI:
                 if (board[line][col] == 0) : 
                     return True 
         return False
-
-

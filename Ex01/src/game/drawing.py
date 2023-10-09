@@ -42,7 +42,7 @@ class Drawing:
     def end_screen(self, screen):
         screen.fill(BACKGROUND_COLOR)
         font = pygame.font.Font("game/font/Roboto-Regular.ttf", 25)
-        text = font.render("Press space key to play again!", True, (255,255,255))
+        text = font.render("Click to play again!", True, (0,0,0))
         text_rect = text.get_rect()
         text_rect.center = (SCREEN_SIZE // 2, SCREEN_SIZE // 2)
         screen.blit(text, text_rect)
@@ -54,6 +54,6 @@ class Drawing:
                     pygame.quit()
                     sys.exit()
                 
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     return True
                     

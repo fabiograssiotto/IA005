@@ -13,6 +13,7 @@ class Game:
         self.turn = 1
         self.end = False
         self.AI = AI()
+        self.playCount = 0
 
     def launch(self):
         pygame.init()
@@ -24,6 +25,10 @@ class Game:
     def game_loop(self, screen):
 
         while True:
+            if (self.playCount == 9 and self.end == False):
+                # Game finished
+                pygame.display.update()
+                self.play_again(screen)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -59,7 +64,6 @@ class Game:
                     (column, row) = self.AI.play(self.board)
                     self.modify_board(column, row, self.turn)
                     pygame.display.update()
-
                 
                 if self.end != True:
                     self.drawing.draw_grid(screen)
@@ -74,13 +78,18 @@ class Game:
 
                     self.end = True
                     pygame.display.update()
-                    time.sleep(1)
-                    play_again = self.drawing.end_screen(screen)
+                    self.play_again(screen)
+
+    def play_again(self, screen):
+            time.sleep(1)
+            play_again = self.drawing.end_screen(screen)
                     
-                    if play_again:
-                        self.board = [[0 for j in range(NB_COLUMN_ROW)] for i in range(NB_COLUMN_ROW)]
-                        self.end = False
-                        self.launch()
+            if play_again:
+                self.board = [[0 for j in range(NB_COLUMN_ROW)] for i in range(NB_COLUMN_ROW)]
+                self.playCount = 0
+                self.turn = 1
+                self.end = False
+                self.launch()
 
     def modify_board(self, column, row, value):
         if self.board[column][row] == 0:
@@ -88,9 +97,9 @@ class Game:
             
             if self.turn == 1:
                 self.turn = 2
-            
             else:
                 self.turn = 1
+        self.playCount = self.playCount + 1
     
     def check_align(self):
         for i in range(NB_COLUMN_ROW):
