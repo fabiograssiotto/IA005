@@ -60,4 +60,8 @@ class Drawing:
                 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     return True
+                
+    def save_screen(self, screen, play):
+        file_name = "screenshot" + str(play) + ".jpg"
+        pygame.image.save(screen , file_name)
                     

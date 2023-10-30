@@ -56,13 +56,13 @@ class Game:
                             elif pos [1] <= SCREEN_SIZE:
                                 row = 2
                             # modify board
-                            self.modify_board(column, row, self.turn)                            
+                            self.modify_board(column, row, self.turn, screen)                            
                         pygame.display.update()
 
                 else:
                     # second player is the AI.
                     (column, row) = self.AI.play(self.board)
-                    self.modify_board(column, row, self.turn)
+                    self.modify_board(column, row, self.turn, screen)
                     pygame.display.update()
                 
                 if self.end != True:
@@ -81,6 +81,7 @@ class Game:
                     self.play_again(screen)
 
     def play_again(self, screen):
+            self.drawing.save_screen(screen, self.playCount)
             time.sleep(1)
             # Check game result
             res = self.AI.evaluateBoard(self.board)
@@ -100,7 +101,7 @@ class Game:
                 self.end = False
                 self.launch()
 
-    def modify_board(self, column, row, value):
+    def modify_board(self, column, row, value, screen):
         if self.board[column][row] == 0:
             self.board[column][row] = value
             
@@ -109,6 +110,7 @@ class Game:
             else:
                 self.turn = 1
         self.playCount = self.playCount + 1
+        self.drawing.save_screen(screen, self.playCount)
     
     def check_align(self):
         for i in range(NB_COLUMN_ROW):
